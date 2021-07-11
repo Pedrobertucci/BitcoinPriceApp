@@ -4,20 +4,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.bitcoin.viewer.R
+import com.bitcoin.viewer.databinding.ActivityMainBinding
 import com.bitcoin.viewer.viewModel.BitcoinViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    lateinit var binding: ActivityMainBinding
     @Inject
     lateinit var viewModel: BitcoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupObservers()
         viewModel.getData()
     }
@@ -25,6 +26,11 @@ class MainActivity : AppCompatActivity() {
     private fun setupObservers() {
         viewModel.bitcoinLiveData.observe(this, {
             Log.d("mainActivity", "bitcoinLiveData: $it")
+
+            it?.let {
+                viewModel.updateData()
+                binding.txtPriceValue.text = it.coinData.first().priceUsd
+            }
         })
 
         viewModel.errorLiveData.observe(this, {
