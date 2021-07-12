@@ -8,5 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="price_light">#2EBA48</color>
-    <color name="labels">#FF6200EE</color>
+    <color name="labels">#FFBB86FC</color>
 </resources>

@@ -46,6 +46,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -55,6 +59,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.airbnb.android:lottie:3.7.0'
+    kapt "androidx.databinding:databinding-compiler:$gradle_version"
 
     //Dependency Injection
     implementation "com.google.dagger:hilt-android:$hilt_version"

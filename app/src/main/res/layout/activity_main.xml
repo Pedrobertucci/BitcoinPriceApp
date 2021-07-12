@@ -1,42 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="bitcoin.json"
-        app:lottie_loop="true" />
+    <data>
+        <variable
+            name="coinData"
+            type="com.bitcoin.viewer.model.CoinData" />
+    </data>
 
-    <TextView
-        android:id="@+id/txtLabelPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/label_price"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/animation"
-        app:layout_constraintTop_toBottomOf="@+id/animation" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.MainActivity">
 
-    <TextView
-        android:id="@+id/txtPriceValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/txtLabelPrice"
-        app:layout_constraintEnd_toEndOf="@+id/animation"
-        app:layout_constraintStart_toEndOf="@+id/txtLabelPrice"
-        app:layout_constraintTop_toTopOf="@+id/txtLabelPrice"
-        tools:text="@tools:sample/lorem[2]" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="32dp"
+            android:cropToPadding="false"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="bitcoin.json"
+            app:lottie_loop="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/txtPriceValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/price_light"
+            android:textSize="24sp"
+            app:currency="@{coinData.priceUsd}"
+            app:layout_constraintEnd_toEndOf="@+id/animation"
+            app:layout_constraintStart_toEndOf="@+id/txtLabelPrice"
+            app:layout_constraintTop_toBottomOf="@+id/animation"
+            tools:text="@tools:sample/lorem[2]" />
+
+        <TextView
+            android:id="@+id/txtMarketCap"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/price_light"
+            android:textSize="20sp"
+            app:currency="@{coinData.marketCapUsd}"
+            app:layout_constraintEnd_toEndOf="@+id/animation"
+            app:layout_constraintStart_toEndOf="@+id/txtLabelMktCap"
+            app:layout_constraintTop_toBottomOf="@+id/txtPriceValue"
+            tools:text="@tools:sample/lorem[2]" />
+
+        <TextView
+            android:id="@+id/txtVolumeUsd24Hr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/price_light"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/animation"
+            app:layout_constraintStart_toEndOf="@+id/txtLabel"
+            app:layout_constraintTop_toBottomOf="@+id/txtMarketCap"
+            app:currency="@{coinData.volumeUsd24Hr}"
+            tools:text="@tools:sample/lorem[2]" />
+
+        <TextView
+            android:id="@+id/txtLabelPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/label_price"
+            android:textColor="@color/labels"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/animation" />
+
+        <TextView
+            android:id="@+id/txtLabelMktCap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/label_mkt_cap"
+            android:textColor="@color/labels"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtLabelPrice" />
+
+        <TextView
+            android:id="@+id/txtLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/sales_24h"
+            android:textColor="@color/labels"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtLabelMktCap" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

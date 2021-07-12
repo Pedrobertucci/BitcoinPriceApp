@@ -1,6 +1,5 @@
 package com.bitcoin.viewer.viewModel
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -23,10 +21,11 @@ class BitcoinViewModel @Inject constructor(private val remoteDataSource: RemoteD
     private val errorMutableData = MutableLiveData<String>()
     val errorLiveData: LiveData<String> get() = errorMutableData
 
-    @SuppressLint("CheckResult")
     fun updateData() {
-        Completable.timer(5, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-            .subscribe(this::getData)
+        compositeDisposable.add(Completable
+            .timer(10, TimeUnit.SECONDS,
+                AndroidSchedulers.mainThread())
+                .subscribe(this::getData))
     }
 
     fun getData() {
@@ -36,11 +35,11 @@ class BitcoinViewModel @Inject constructor(private val remoteDataSource: RemoteD
             .subscribe({
                 it?.let {
                     bitcoinMutableData.value = it
+                } ?: run {
+                    errorMutableData.value = "Error data parser"
                 }
             }, {
-                it?.let {
-                    errorMutableData.value = it.message
-                }
+                errorMutableData.value = it.message ?: it.toString()
             }))
     }
 
