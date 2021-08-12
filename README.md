@@ -1,4 +1,4 @@
-# Bitcoin Viewer
+# Bitcoin Price App
 
 Sample project to use RxJava and DataBinding. 
 
